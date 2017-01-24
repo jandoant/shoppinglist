@@ -20,6 +20,11 @@ public final class Constants {
      * Constants for Firebase URL
      */
     public static final String FIREBASE_URL = BuildConfig.UNIQUE_FIREBASE_ROOT_URL;
+
+    public static final String FIREBASE_PROPERTY_TIMESTAMP = "timestamp";
+
+
+
     /**
      * Constants for bundles, extras and shared preferences keys
      */

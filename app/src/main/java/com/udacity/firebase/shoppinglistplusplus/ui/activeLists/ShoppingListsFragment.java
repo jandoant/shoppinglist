@@ -17,6 +17,7 @@ import com.firebase.client.ValueEventListener;
 import com.udacity.firebase.shoppinglistplusplus.R;
 import com.udacity.firebase.shoppinglistplusplus.model.ShoppingList;
 import com.udacity.firebase.shoppinglistplusplus.utils.Constants;
+import com.udacity.firebase.shoppinglistplusplus.utils.Utils;
 
 /**
  * A simple {@link Fragment} subclass that shows a list of all shopping lists a user can see.
@@ -25,8 +26,8 @@ import com.udacity.firebase.shoppinglistplusplus.utils.Constants;
  */
 public class ShoppingListsFragment extends Fragment {
     private ListView mListView;
-    private TextView mTextViewListName;
-    private TextView mTextViewCreatedByUser;
+    private TextView mTextViewListName, mTextViewCreatedByUser;
+    private TextView mTextViewEditTime;
 
     public ShoppingListsFragment() {
         /* Required empty public constructor */
@@ -79,12 +80,13 @@ public class ShoppingListsFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.d("TAG1", "Data has changed");
 
-                //extract ListName from dataSnapshot
+                //extract ShoppngList from dataSnapshot
                 ShoppingList shoppingList = dataSnapshot.getValue(ShoppingList.class);
                 if (shoppingList != null) {
                     //populate Data into TextView
                     mTextViewListName.setText(shoppingList.getListName());
                     mTextViewCreatedByUser.setText(shoppingList.getOwner());
+                    mTextViewEditTime.setText(Utils.formatDate(shoppingList.getTimestampLastChangedInMillis()));
                 }
             }
 
@@ -114,6 +116,7 @@ public class ShoppingListsFragment extends Fragment {
         mListView = (ListView) rootView.findViewById(R.id.list_view_active_lists);
         mTextViewListName = (TextView) rootView.findViewById(R.id.text_view_list_name);
         mTextViewCreatedByUser = (TextView) rootView.findViewById(R.id.text_view_created_by_user);
+        mTextViewEditTime = (TextView) rootView.findViewById(R.id.text_view_edit_time);
     }
 
     @Override

@@ -15,3 +15,5 @@
 * String name
 
 ### v04 - use ShoppingList-Pojo to write and read from Firebase
+
+### v05 - store and display the Time and Date the ShoppingList was updated
