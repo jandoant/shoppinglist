@@ -9,3 +9,7 @@
 ### v02 - read data from and write data to Firebase
 * in AddListDialog: creates or edits name of one List
 * in ShoppingListFragment: shows that very ListName in a single TextField
+
+### v03 - create a ShoppingList-POJO
+* String owner,
+* String name
