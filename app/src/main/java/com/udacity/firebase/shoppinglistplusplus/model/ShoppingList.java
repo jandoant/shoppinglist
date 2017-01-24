@@ -25,7 +25,7 @@ public class ShoppingList {
 
         //assign timestamp from Firebase Server
         HashMap<String, Object> timestampLastChangedObj = new HashMap<String, Object>();
-        timestampLastChangedObj.put(Constants.FIREBASE_PROPERTY_TIMESTAMP, ServerValue.TIMESTAMP);
+        timestampLastChangedObj.put(Constants.FIREBASE_KEY_TIMESTAMP, ServerValue.TIMESTAMP);
         this.timestampLastChanged = timestampLastChangedObj;
     }
 
@@ -35,7 +35,7 @@ public class ShoppingList {
 
     @JsonIgnore
     public long getTimestampLastChangedInMillis() {
-        return (long) this.timestampLastChanged.get(Constants.FIREBASE_PROPERTY_TIMESTAMP);
+        return (long) this.timestampLastChanged.get(Constants.FIREBASE_KEY_TIMESTAMP);
     }
 
     public String getListName() {

@@ -17,3 +17,8 @@
 ### v04 - use ShoppingList-Pojo to write and read from Firebase
 
 ### v05 - store and display the Time and Date the ShoppingList was updated
+
+### v06 - open List DetailScreen
+* create new Activity
+* explicit Intent to open that Activity, when Active List TextView is clicked
+* load Data from DB to display Name of the List in the Title of the Action Bar in Detail Activity

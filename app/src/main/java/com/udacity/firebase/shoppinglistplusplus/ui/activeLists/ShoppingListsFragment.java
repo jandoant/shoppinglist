@@ -1,5 +1,6 @@
 package com.udacity.firebase.shoppinglistplusplus.ui.activeLists;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -16,6 +17,7 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.udacity.firebase.shoppinglistplusplus.R;
 import com.udacity.firebase.shoppinglistplusplus.model.ShoppingList;
+import com.udacity.firebase.shoppinglistplusplus.ui.ActiveListDetailsActivity;
 import com.udacity.firebase.shoppinglistplusplus.utils.Constants;
 import com.udacity.firebase.shoppinglistplusplus.utils.Utils;
 
@@ -74,7 +76,7 @@ public class ShoppingListsFragment extends Fragment {
         /*
         * Call FirebaseDB-ChildNode and notify app when data under this node has changed
          */
-        Firebase activeListRef = new Firebase(Constants.FIREBASE_URL).child("activeList");
+        Firebase activeListRef = new Firebase(Constants.FIREBASE_URL).child(Constants.FIREBASE_NODE_ACTIVE_LIST);
         activeListRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -115,8 +117,21 @@ public class ShoppingListsFragment extends Fragment {
     private void initializeScreen(View rootView) {
         mListView = (ListView) rootView.findViewById(R.id.list_view_active_lists);
         mTextViewListName = (TextView) rootView.findViewById(R.id.text_view_list_name);
+
+        mTextViewListName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openActiveListDetailsActivity();
+            }
+        });
+
         mTextViewCreatedByUser = (TextView) rootView.findViewById(R.id.text_view_created_by_user);
         mTextViewEditTime = (TextView) rootView.findViewById(R.id.text_view_edit_time);
+    }
+
+    private void openActiveListDetailsActivity() {
+        Intent intent = new Intent(getActivity(), ActiveListDetailsActivity.class);
+        startActivity(intent);
     }
 
     @Override

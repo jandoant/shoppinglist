@@ -21,9 +21,9 @@ public final class Constants {
      */
     public static final String FIREBASE_URL = BuildConfig.UNIQUE_FIREBASE_ROOT_URL;
 
-    public static final String FIREBASE_PROPERTY_TIMESTAMP = "timestamp";
+    public static final String FIREBASE_NODE_ACTIVE_LIST = "activeList";
 
-
+    public static final String FIREBASE_KEY_TIMESTAMP = "timestamp";
 
     /**
      * Constants for bundles, extras and shared preferences keys

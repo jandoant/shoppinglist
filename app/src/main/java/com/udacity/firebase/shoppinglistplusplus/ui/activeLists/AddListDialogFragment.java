@@ -103,7 +103,7 @@ public class AddListDialogFragment extends DialogFragment {
         ShoppingList shoppingList = new ShoppingList(userInput, "Dummy User");
 
         //create one single node in the DB
-        ref.child("activeList").setValue(shoppingList);
+        ref.child(Constants.FIREBASE_NODE_ACTIVE_LIST).setValue(shoppingList);
     }
 }
 
