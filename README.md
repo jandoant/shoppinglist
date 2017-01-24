@@ -13,3 +13,5 @@
 ### v03 - create a ShoppingList-POJO
 * String owner,
 * String name
+
+### v04 - use ShoppingList-Pojo to write and read from Firebase

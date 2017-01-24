@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.firebase.client.Firebase;
 import com.udacity.firebase.shoppinglistplusplus.R;
+import com.udacity.firebase.shoppinglistplusplus.model.ShoppingList;
 import com.udacity.firebase.shoppinglistplusplus.utils.Constants;
 
 /**
@@ -93,12 +94,16 @@ public class AddListDialogFragment extends DialogFragment {
      * Add new active list to the DB
      */
     public void addShoppingList() {
+
         //Firebase Object that points to the root of the DB
         Firebase ref = new Firebase(Constants.FIREBASE_URL);
         //extract UserInput from EditText
         String userInput = mEditTextListName.getText().toString();
+        //create a ShoppingList Object with a dummyUser
+        ShoppingList shoppingList = new ShoppingList(userInput, "Dummy User");
+
         //create one single node in the DB
-        ref.child("listName").setValue(userInput);
+        ref.child("activeList").setValue(shoppingList);
     }
 }
 

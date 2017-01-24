@@ -15,6 +15,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.udacity.firebase.shoppinglistplusplus.R;
+import com.udacity.firebase.shoppinglistplusplus.model.ShoppingList;
 import com.udacity.firebase.shoppinglistplusplus.utils.Constants;
 
 /**
@@ -25,6 +26,7 @@ import com.udacity.firebase.shoppinglistplusplus.utils.Constants;
 public class ShoppingListsFragment extends Fragment {
     private ListView mListView;
     private TextView mTextViewListName;
+    private TextView mTextViewCreatedByUser;
 
     public ShoppingListsFragment() {
         /* Required empty public constructor */
@@ -71,16 +73,19 @@ public class ShoppingListsFragment extends Fragment {
         /*
         * Call FirebaseDB-ChildNode and notify app when data under this node has changed
          */
-        Firebase listNameRef = new Firebase(Constants.FIREBASE_URL).child("listName");
-        listNameRef.addValueEventListener(new ValueEventListener() {
+        Firebase activeListRef = new Firebase(Constants.FIREBASE_URL).child("activeList");
+        activeListRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.d("TAG1", "Data has changed");
 
                 //extract ListName from dataSnapshot
-                String listName = (String) dataSnapshot.getValue();
-                //populate Data into TextView
-                mTextViewListName.setText(listName);
+                ShoppingList shoppingList = dataSnapshot.getValue(ShoppingList.class);
+                if (shoppingList != null) {
+                    //populate Data into TextView
+                    mTextViewListName.setText(shoppingList.getListName());
+                    mTextViewCreatedByUser.setText(shoppingList.getOwner());
+                }
             }
 
             @Override
@@ -108,6 +113,7 @@ public class ShoppingListsFragment extends Fragment {
     private void initializeScreen(View rootView) {
         mListView = (ListView) rootView.findViewById(R.id.list_view_active_lists);
         mTextViewListName = (TextView) rootView.findViewById(R.id.text_view_list_name);
+        mTextViewCreatedByUser = (TextView) rootView.findViewById(R.id.text_view_created_by_user);
     }
 
     @Override
