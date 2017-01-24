@@ -90,13 +90,14 @@ public class AddListDialogFragment extends DialogFragment {
     }
 
     /**
-     * Add new active list
+     * Add new active list to the DB
      */
     public void addShoppingList() {
+        //Firebase Object that points to the root of the DB
         Firebase ref = new Firebase(Constants.FIREBASE_URL);
-
+        //extract UserInput from EditText
         String userInput = mEditTextListName.getText().toString();
-
+        //create one single node in the DB
         ref.child("listName").setValue(userInput);
     }
 }
