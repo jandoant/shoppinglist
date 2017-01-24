@@ -13,17 +13,21 @@
         android:layout_height="match_parent"
         android:scrollbars="none"/>
 
-    <android.support.design.widget.FloatingActionButton xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                        android:id="@+id/fab"
-                                                        style="@style/FAB"
-                                                        android:layout_width="wrap_content"
-                                                        android:layout_height="wrap_content"
-                                                        android:layout_alignParentBottom="true"
-                                                        android:layout_alignParentEnd="true"
-                                                        android:layout_alignParentRight="true"
-                                                        android:onClick="showAddMealDialog"
-                                                        android:src="@drawable/icon_add"
-                                                        app:borderWidth="0dp"
-                                                        app:elevation="6dp"
-                                                        app:pressedTranslationZ="12dp"/>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        style="@style/FAB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="19dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:onClick="showAddMealDialog"
+        android:src="@drawable/icon_add"
+        app:borderWidth="0dp"
+        app:elevation="6dp"
+        app:pressedTranslationZ="12dp"
+        app:srcCompat="@drawable/ic_food_variant_white_24dp"/>
 </RelativeLayout>

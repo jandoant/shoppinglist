@@ -58,6 +58,9 @@ public class AddMealDialogFragment extends DialogFragment {
         View rootView = inflater.inflate(R.layout.dialog_add_meal, null);
         editTextMealName = (EditText) rootView.findViewById(R.id.edit_text_meal_name);
 
+        //Dialog Title
+        builder.setTitle(getString(R.string.dialog_title_add_meal));
+
         /**
          * Call addMeal() when user taps "Done" keyboard action
          */

@@ -13,7 +13,9 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.firebase.client.Firebase;
 import com.udacity.firebase.shoppinglistplusplus.R;
+import com.udacity.firebase.shoppinglistplusplus.utils.Constants;
 
 /**
  * Adds a new shopping list
@@ -70,6 +72,8 @@ public class AddListDialogFragment extends DialogFragment {
                 return true;
             }
         });
+        //Dialog Title
+        builder.setTitle(getString(R.string.dialog_title_add_shopping_list));
 
         /* Inflate and set the layout for the dialog */
         /* Pass null as the parent view because its going in the dialog layout*/
@@ -89,7 +93,11 @@ public class AddListDialogFragment extends DialogFragment {
      * Add new active list
      */
     public void addShoppingList() {
+        Firebase ref = new Firebase(Constants.FIREBASE_URL);
 
+        String userInput = mEditTextListName.getText().toString();
+
+        ref.child("listName").setValue(userInput);
     }
 }
 

@@ -36,5 +36,6 @@
                                                         app:borderWidth="0dp"
                                                         app:elevation="6dp"
                                                         app:pressedTranslationZ="12dp"
-                                                        app:rippleColor="@android:color/white"/>
+                                                        app:rippleColor="@android:color/white"
+                                                        app:srcCompat="@drawable/ic_playlist_plus_white_24dp"/>
 </RelativeLayout>
