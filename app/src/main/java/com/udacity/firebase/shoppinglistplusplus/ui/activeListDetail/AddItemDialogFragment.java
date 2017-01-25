@@ -33,7 +33,7 @@ public class AddItemDialogFragment extends EditListDialogFragment {
          */
         Bundle bundle = helpCreateBundle(R.layout.dialog_edit_list);
         bundle.putString(Constants.BUNDLE_KEY_LIST_NAME, shoppingList.getListName());
-        bundle.putString(Constants.BUNDLE_KEY_PUSH_ID, pushID);
+        bundle.putString(Constants.BUNDLE_KEY_PUSH_ID_LIST, pushID);
         addItemDialogFragment.setArguments(bundle);
 
         return addItemDialogFragment;
@@ -44,7 +44,7 @@ public class AddItemDialogFragment extends EditListDialogFragment {
         super.onCreate(savedInstanceState);
 
         mListName = getArguments().getString(Constants.BUNDLE_KEY_LIST_NAME);
-        mPushIDList = getArguments().getString(Constants.BUNDLE_KEY_PUSH_ID);
+        mPushIDList = getArguments().getString(Constants.BUNDLE_KEY_PUSH_ID_LIST);
     }
 
     @Override

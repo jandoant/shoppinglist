@@ -24,7 +24,7 @@ public class RemoveListDialogFragment extends DialogFragment {
         RemoveListDialogFragment removeListDialogFragment = new RemoveListDialogFragment();
         Bundle bundle = new Bundle();
         bundle.putString(Constants.BUNDLE_KEY_LIST_NAME, shoppingList.getListName());
-        bundle.putString(Constants.BUNDLE_KEY_PUSH_ID, pushIDList);
+        bundle.putString(Constants.BUNDLE_KEY_PUSH_ID_LIST, pushIDList);
         removeListDialogFragment.setArguments(bundle);
         return removeListDialogFragment;
     }
@@ -33,7 +33,7 @@ public class RemoveListDialogFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mPushIDList = getArguments().getString(Constants.BUNDLE_KEY_PUSH_ID);
+        mPushIDList = getArguments().getString(Constants.BUNDLE_KEY_PUSH_ID_LIST);
         mListName = getArguments().getString(Constants.BUNDLE_KEY_LIST_NAME);
     }
 

@@ -21,6 +21,7 @@ import com.udacity.firebase.shoppinglistplusplus.utils.Constants;
  */
 public class ShoppingListsFragment extends Fragment {
     private ListView mListView;
+    private ActiveListsAdapter mAdapter;
 
     public ShoppingListsFragment() {
         /* Required empty public constructor */
@@ -68,8 +69,8 @@ public class ShoppingListsFragment extends Fragment {
          */
         Firebase activeListRef = new Firebase(Constants.FIREBASE_URL_ACTIVE_LISTS);
 
-        final ActiveListsAdapter adapter = new ActiveListsAdapter(getActivity(), activeListRef);
-        mListView.setAdapter(adapter);
+        mAdapter = new ActiveListsAdapter(getActivity(), activeListRef);
+        mListView.setAdapter(mAdapter);
         /**
          * When User clicks on Item - Detail Screen of that Item gets opened
          */
@@ -77,10 +78,10 @@ public class ShoppingListsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                //extract pushID from the clicked Item
-                String pushID = adapter.getRef(position).getKey();
-                //open DetailActivity of the Item that has this pushID
-                openActiveListDetailsActivity(pushID);
+                //extract pushIDList from the clicked Item
+                String pushIDList = mAdapter.getRef(position).getKey();
+                //open DetailActivity of the Item that has this pushIDList
+                openActiveListDetailsActivity(pushIDList);
             }
         });
 
@@ -103,5 +104,7 @@ public class ShoppingListsFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+
+        mAdapter.cleanup();
     }
 }

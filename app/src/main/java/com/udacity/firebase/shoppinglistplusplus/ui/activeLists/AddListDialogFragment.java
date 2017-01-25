@@ -28,7 +28,7 @@ public class AddListDialogFragment extends DialogFragment {
 
     /**
      * Public static constructor that creates fragment and
-     * passes a bundle with data into it when adapter is created
+     * passes a bundle with data into it when mAdapter is created
      */
     public static AddListDialogFragment newInstance() {
         AddListDialogFragment addListDialogFragment = new AddListDialogFragment();

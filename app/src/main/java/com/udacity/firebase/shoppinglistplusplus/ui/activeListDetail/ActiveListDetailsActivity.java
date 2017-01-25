@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.firebase.client.DataSnapshot;
@@ -15,6 +16,7 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.udacity.firebase.shoppinglistplusplus.R;
 import com.udacity.firebase.shoppinglistplusplus.model.ShoppingList;
+import com.udacity.firebase.shoppinglistplusplus.model.ShoppingListItem;
 import com.udacity.firebase.shoppinglistplusplus.ui.BaseActivity;
 import com.udacity.firebase.shoppinglistplusplus.utils.Constants;
 
@@ -22,6 +24,7 @@ public class ActiveListDetailsActivity extends BaseActivity {
 
     ShoppingList mShoppingList;
     String mPushIDList;
+    ItemsAdapter mAdapter;
     private ValueEventListener mActiveListRefListener;
     private Firebase mRefActiveList;
 
@@ -51,8 +54,22 @@ public class ActiveListDetailsActivity extends BaseActivity {
 
         ListView listView = (ListView) findViewById(R.id.list_view_shopping_list_items);
         Firebase refItemList = new Firebase(Constants.FIREBASE_URL_SHOPPING_ITEMS).child(mPushIDList);
-        ItemsAdapter adapter = new ItemsAdapter(this, refItemList);
-        listView.setAdapter(adapter);
+
+        mAdapter = new ItemsAdapter(this, refItemList);
+        listView.setAdapter(mAdapter);
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                //extract pushIDList from the clicked Item
+                ShoppingListItem shoppingListItem = mAdapter.getItem(position);
+                String pushIDItem = mAdapter.getRef(position).getKey();
+
+                showEditItemNameDialog(shoppingListItem, pushIDItem);
+                return true;
+            }
+        });
 
         //read from Active List Node - needed to dynamically Display the Toolbar Title
         mRefActiveList = new Firebase(Constants.FIREBASE_URL_ACTIVE_LISTS).child(mPushIDList);
@@ -80,6 +97,13 @@ public class ActiveListDetailsActivity extends BaseActivity {
          /* Create an instance of the dialog fragment and show it */
         DialogFragment dialog = AddItemDialogFragment.newInstance(mShoppingList, mPushIDList);
         dialog.show(this.getFragmentManager(), "AddItemDialogFragment");
+    }
+
+    private void showEditItemNameDialog(ShoppingListItem shoppingListItem, String pushIDItem) {
+
+        /* Create an instance of the dialog fragment and show it */
+        DialogFragment dialog = EditItemNameDialogFragment.newInstance(shoppingListItem, mPushIDList, pushIDItem);
+        dialog.show(this.getFragmentManager(), "EditItemNameDialogFragment");
     }
 
     @Override

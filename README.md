@@ -62,5 +62,9 @@
 
 ### v15 - remove all associated ShoppingItems when List gets removed
 
-### v16 remove EventListeners to prevent Memory Leak
+### v16 - remove EventListeners to prevent Memory Leak
+
+### v17 - edit ShoppingItemName onLongItemClick
+* show EditItemDialog when longClicking
+* update ItemName in Firebase
 
