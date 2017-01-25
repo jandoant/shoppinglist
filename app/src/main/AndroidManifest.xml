@@ -29,6 +29,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.udacity.firebase.shoppinglistplusplus.ui.MainActivity"/>
         </activity>
+        <activity android:name=".ui.login.CreateAccountActivity">
+        </activity>
+        <activity android:name=".ui.login.LoginActivity">
+        </activity>
     </application>
 
 </manifest>

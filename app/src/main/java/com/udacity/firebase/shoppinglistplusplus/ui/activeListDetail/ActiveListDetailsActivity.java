@@ -55,7 +55,7 @@ public class ActiveListDetailsActivity extends BaseActivity {
         ListView listView = (ListView) findViewById(R.id.list_view_shopping_list_items);
         Firebase refItemList = new Firebase(Constants.FIREBASE_URL_SHOPPING_ITEMS).child(mPushIDList);
 
-        mAdapter = new ItemsAdapter(this, refItemList);
+        mAdapter = new ItemsAdapter(this, refItemList, mPushIDList);
         listView.setAdapter(mAdapter);
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

@@ -17,8 +17,11 @@ import com.udacity.firebase.shoppinglistplusplus.model.ShoppingListItem;
 
 public class ItemsAdapter extends FirebaseListAdapter<ShoppingListItem> {
 
-    public ItemsAdapter(Activity activity, Query ref) {
+    private String mPushIDList;
+
+    public ItemsAdapter(Activity activity, Query ref, String pushIDList) {
         super(activity, ShoppingListItem.class, R.layout.single_shopping_item, ref);
+        mPushIDList = pushIDList;
     }
 
     @Override
@@ -40,11 +43,10 @@ public class ItemsAdapter extends FirebaseListAdapter<ShoppingListItem> {
 
     private void showRemoveItemDialog(int position) {
         String pushIDItem = getRef(position).getKey();
-        String pushIDList = getRef(position).getParent().getKey();
 
         /* Create an instance of the dialog fragment and show it */
         /* Create an instance of the dialog fragment and show it */
-        DialogFragment dialog = RemoveItemDialogFragment.newInstance(getItem(position), pushIDList, pushIDItem);
+        DialogFragment dialog = RemoveItemDialogFragment.newInstance(getItem(position), mPushIDList, pushIDItem);
         dialog.show(mActivity.getFragmentManager(), "RemoveItemNameDialogFragment");
     }
 }

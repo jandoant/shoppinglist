@@ -73,3 +73,8 @@
 * onClickListener on Image in Adapter to open Dialog
 * remove Item from Firebase by Confirming Dialog
 
+# v1.00 - User Authentification
+
+### v1.01 - Copy Login Activities and Layout-Files from GitHub
+
+
