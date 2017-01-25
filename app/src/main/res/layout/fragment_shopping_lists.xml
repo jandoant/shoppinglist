@@ -5,23 +5,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/grey"
-                tools:context=".ShoppingListsFragment">
+                tools:context=".ui.activeLists.ShoppingListsFragment">
 
-    <LinearLayout
+    <ListView
+        android:id="@+id/list_view_active_lists"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <include layout="@layout/single_active_list"/>
-
-        <ListView
-            android:id="@+id/list_view_active_lists"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:scrollbars="none"/>
-
-    </LinearLayout>
+        android:scrollbars="none"/>
 
     <android.support.design.widget.FloatingActionButton xmlns:app="http://schemas.android.com/apk/res-auto"
                                                         android:id="@+id/fab"

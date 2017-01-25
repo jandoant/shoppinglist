@@ -29,7 +29,7 @@ public final class Constants {
     public static final String FIREBASE_NODE_TIMESTAMP_CREATED = "timestampCreated";
     public static final String FIREBASE_NODE_ACTIVE_LIST = "activeLists";
     //URL to specific node
-    public static final String FIREBASE_URL_ACTIVE_LIST = FIREBASE_URL + "/" + FIREBASE_NODE_ACTIVE_LIST;
+    public static final String FIREBASE_URL_ACTIVE_LISTS = FIREBASE_URL + "/" + FIREBASE_NODE_ACTIVE_LIST;
 
     /**
      * Constants for bundles, extras and shared preferences keys

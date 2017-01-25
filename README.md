@@ -35,3 +35,11 @@
 * create a new Unique-ID under activeLists - Node using push
 * insert a new shooping list item under that unique node
 * display the data in the TextView
+
+### v10 - Show ActiveLists in ListView
+* install the library - `compile 'com.firebaseui:firebase-ui:0.2.2'` in app-gradle-File
+* make a ListView - `mListView`
+* add a layout - `single_activ_list.xml`
+* add a firebase reference pointing at the root of data array that needs to be displayed
+* create and attach the adapter - extend from FirebaseAdapter
+* override populateView() in Adapter
