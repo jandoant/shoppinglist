@@ -49,3 +49,8 @@
 ### v12 - removing single ShoppingList via DetailActivity
 * delete a Item with the chosen pushID from Firebase
 * create Dialog that warns User about Deletion
+
+### v13 - add ShoppingListItem Pojo to Project
+* String name
+* String owner
+* getters

@@ -25,6 +25,7 @@ public class ActiveListDetailsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_active_list_details);
 
+        //Receive PushId of the chosen ShoppingList via Intent
         Bundle extras = getIntent().getExtras();
         mPushIDList = extras.getString(Constants.EXTRA_KEY_PUSH_ID);
 
@@ -42,8 +43,10 @@ public class ActiveListDetailsActivity extends BaseActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+                //extract ShoppingList Object from Firebase
                 mShoppingList = dataSnapshot.getValue(ShoppingList.class);
 
+                //set Toolbar Title dynamically
                 if (mShoppingList != null) {
                     toolbar.setTitle(mShoppingList.getListName());
                 }
@@ -71,7 +74,7 @@ public class ActiveListDetailsActivity extends BaseActivity {
                 showEditListNameDialog();
                 return true;
 
-            case R.id.action_delete_single_list:
+            case R.id.action_remove_single_list:
                 showRemoveListDialog();
                 return true;
 
