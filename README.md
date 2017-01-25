@@ -43,3 +43,5 @@
 * add a firebase reference pointing at the root of data array that needs to be displayed
 * create and attach the adapter - extend from FirebaseAdapter
 * override populateView() in Adapter
+
+### v11 - fix Edit Functionality

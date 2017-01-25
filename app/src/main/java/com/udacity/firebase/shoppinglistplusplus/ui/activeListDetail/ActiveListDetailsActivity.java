@@ -18,11 +18,15 @@ import com.udacity.firebase.shoppinglistplusplus.utils.Constants;
 public class ActiveListDetailsActivity extends BaseActivity {
 
     ShoppingList mShoppingList;
+    String mPushIDList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_active_list_details);
+
+        Bundle extras = getIntent().getExtras();
+        mPushIDList = extras.getString(Constants.EXTRA_KEY_PUSH_ID);
 
         invalidateOptionsMenu();
 
@@ -32,7 +36,7 @@ public class ActiveListDetailsActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //read from Active List Node
-        Firebase ref = new Firebase(Constants.FIREBASE_URL_ACTIVE_LISTS).child("-KbK1y_kHvB9CvvH-9we");
+        Firebase ref = new Firebase(Constants.FIREBASE_URL_ACTIVE_LISTS).child(mPushIDList);
 
         ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -80,7 +84,7 @@ public class ActiveListDetailsActivity extends BaseActivity {
 
     private void showEditListNameDialog() {
        /* Create an instance of the dialog fragment and show it */
-        DialogFragment dialog = EditListNameDialogFragment.newInstance(mShoppingList);
+        DialogFragment dialog = EditListNameDialogFragment.newInstance(mShoppingList, mPushIDList);
         dialog.show(this.getFragmentManager(), "EditListNameDialogFragment");
     }
 }

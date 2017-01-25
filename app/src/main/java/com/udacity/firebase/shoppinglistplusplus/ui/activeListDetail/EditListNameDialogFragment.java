@@ -19,11 +19,12 @@ import java.util.HashMap;
 public class EditListNameDialogFragment extends EditListDialogFragment {
 
     String mListName;
+    String mPushIDList;
 
     /**
      * Public static constructor that creates fragment and passes a bundle with data into it when adapter is created
      */
-    public static EditListNameDialogFragment newInstance(ShoppingList shoppingList) {
+    public static EditListNameDialogFragment newInstance(ShoppingList shoppingList, String pushID) {
 
         EditListNameDialogFragment editListNameDialogFragment = new EditListNameDialogFragment();
 
@@ -33,6 +34,7 @@ public class EditListNameDialogFragment extends EditListDialogFragment {
          */
         Bundle bundle = helpCreateBundle(R.layout.dialog_edit_list);
         bundle.putString(Constants.BUNDLE_KEY_LIST_NAME, shoppingList.getListName());
+        bundle.putString(Constants.BUNDLE_KEY_PUSH_ID, pushID);
         editListNameDialogFragment.setArguments(bundle);
 
         return editListNameDialogFragment;
@@ -41,6 +43,7 @@ public class EditListNameDialogFragment extends EditListDialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mPushIDList = getArguments().getString(Constants.BUNDLE_KEY_PUSH_ID);
         mListName = getArguments().getString(Constants.BUNDLE_KEY_LIST_NAME);
     }
 
@@ -59,12 +62,12 @@ public class EditListNameDialogFragment extends EditListDialogFragment {
 
         final String inputListName = mEditTextForList.getText().toString().trim();
 
-        if (!TextUtils.isEmpty(inputListName)) {
+        if (!TextUtils.isEmpty(inputListName) && !TextUtils.isEmpty(mPushIDList)) {
             if (!inputListName.equals(mListName)) {
                 /*
                 * update specific Properties in Firebase
                 */
-                Firebase activeListRef = new Firebase(Constants.FIREBASE_URL_ACTIVE_LISTS).child("-KbK1y_kHvB9CvvH-9we");
+                Firebase activeListRef = new Firebase(Constants.FIREBASE_URL_ACTIVE_LISTS).child(mPushIDList);
 
                 /*
                 * Hashmap for the specific properties to be updated

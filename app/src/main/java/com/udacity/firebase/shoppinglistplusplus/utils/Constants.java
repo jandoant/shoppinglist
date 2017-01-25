@@ -34,6 +34,9 @@ public final class Constants {
     /**
      * Constants for bundles, extras and shared preferences keys
      */
+    public static final String EXTRA_KEY_PUSH_ID = "PUSH_ID";
+
     public static final String BUNDLE_KEY_LIST_NAME = "LIST_NAME";
     public static final String BUNDLE_KEY_LAYOUT_RESOURCE = "LAYOUT_RESOURCE";
+    public static final String BUNDLE_KEY_PUSH_ID = "PUSH_ID";
 }

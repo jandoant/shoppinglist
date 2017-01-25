@@ -71,15 +71,19 @@ public class ShoppingListsFragment extends Fragment {
          */
         Firebase activeListRef = new Firebase(Constants.FIREBASE_URL_ACTIVE_LISTS);
 
-        ActiveListsAdapter adapter = new ActiveListsAdapter(getActivity(), activeListRef);
+        final ActiveListsAdapter adapter = new ActiveListsAdapter(getActivity(), activeListRef);
         mListView.setAdapter(adapter);
         /**
-         * Set interactive bits, such as click events and adapters
+         * When User clicks on Item - Detail Screen of that Item gets opened
          */
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                //extract pushID from the clicked Item
+                String pushID = adapter.getRef(position).getKey();
+                //open DetailActivity of the Item that has this pushID
+                openActiveListDetailsActivity(pushID);
             }
         });
 
@@ -91,11 +95,11 @@ public class ShoppingListsFragment extends Fragment {
      */
     private void initializeScreen(View rootView) {
         mListView = (ListView) rootView.findViewById(R.id.list_view_active_lists);
-
     }
 
-    private void openActiveListDetailsActivity() {
+    private void openActiveListDetailsActivity(String pushID) {
         Intent intent = new Intent(getActivity(), ActiveListDetailsActivity.class);
+        intent.putExtra(Constants.EXTRA_KEY_PUSH_ID, pushID);
         startActivity(intent);
     }
 
