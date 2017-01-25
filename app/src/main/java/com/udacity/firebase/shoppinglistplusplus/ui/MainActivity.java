@@ -88,6 +88,9 @@ public class MainActivity extends BaseActivity {
      * Create an instance of the AddList dialog fragment and show it
      */
     public void showAddListDialog(View view) {
+
+
+
         /* Create an instance of the dialog fragment and show it */
         DialogFragment dialog = AddListDialogFragment.newInstance();
         dialog.show(MainActivity.this.getFragmentManager(), "AddListDialogFragment");

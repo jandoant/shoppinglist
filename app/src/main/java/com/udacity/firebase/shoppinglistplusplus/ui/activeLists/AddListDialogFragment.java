@@ -22,6 +22,7 @@ import com.udacity.firebase.shoppinglistplusplus.utils.Constants;
  * Adds a new shopping list
  */
 public class AddListDialogFragment extends DialogFragment {
+    static String mOldListName;
     EditText mEditTextListName;
 
     /**
@@ -96,14 +97,14 @@ public class AddListDialogFragment extends DialogFragment {
     public void addShoppingList() {
 
         //Firebase Object that points to the root of the DB
-        Firebase ref = new Firebase(Constants.FIREBASE_URL);
+        Firebase refActiveList = new Firebase(Constants.FIREBASE_URL).child(Constants.FIREBASE_NODE_ACTIVE_LIST);
         //extract UserInput from EditText
         String userInput = mEditTextListName.getText().toString();
         //create a ShoppingList Object with a dummyUser
         ShoppingList shoppingList = new ShoppingList(userInput, "Dummy User");
 
         //create one single node in the DB
-        ref.child(Constants.FIREBASE_NODE_ACTIVE_LIST).setValue(shoppingList);
+        refActiveList.setValue(shoppingList);
     }
 }
 

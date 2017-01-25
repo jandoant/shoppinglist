@@ -21,12 +21,18 @@ public final class Constants {
      */
     public static final String FIREBASE_URL = BuildConfig.UNIQUE_FIREBASE_ROOT_URL;
 
-    public static final String FIREBASE_NODE_ACTIVE_LIST = "activeList";
-
+    //Keys
     public static final String FIREBASE_KEY_TIMESTAMP = "timestamp";
+    public static final String FIREBASE_KEY_LIST_NAME = "listName";
+    //Nodes
+    public static final String FIREBASE_NODE_TIMESTAMP_LAST_CHANGED = "timestampLastChanged";
+    public static final String FIREBASE_NODE_ACTIVE_LIST = "activeList";
+    //URL to specific node
+    public static final String FIREBASE_URL_ACTIVE_LIST = FIREBASE_URL + "/" + FIREBASE_NODE_ACTIVE_LIST;
 
     /**
      * Constants for bundles, extras and shared preferences keys
      */
-
+    public static final String BUNDLE_KEY_LIST_NAME = "LIST_NAME";
+    public static final String BUNDLE_KEY_LAYOUT_RESOURCE = "LAYOUT_RESOURCE";
 }

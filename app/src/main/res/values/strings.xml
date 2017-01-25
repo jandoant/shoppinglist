@@ -205,6 +205,9 @@
     <string name="pref_sort_list_label_most_recently_changed_entry">Most Recently Changed</string>
     <string name="dialog_title_add_shopping_list">Add Shopping List</string>
     <string name="dialog_title_add_meal">Add a new Meal</string>
+    <string name="dialog_title_edit_active_list_name">Edit List</string>
+    <string name="hint_edit_shopping_list">Insert new Name</string>
+    <string name="positive_button_update">Edit Name</string>
 
 
     <!-- Values -->

@@ -22,3 +22,9 @@
 * create new Activity
 * explicit Intent to open that Activity, when Active List TextView is clicked
 * load Data from DB to display Name of the List in the Title of the Action Bar in Detail Activity
+
+### v07 - Implement EditListName Functionality (Detail Screen)
+* Edit Name Button in OptionsMenu
+* when clicking on that Button -> show Edit ListName Dialog
+* Display current ListName in EditDialog
+* update the ListName and LastChangedTimestamp Value in Firebase
