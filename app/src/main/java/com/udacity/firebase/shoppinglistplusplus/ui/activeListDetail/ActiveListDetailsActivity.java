@@ -22,6 +22,8 @@ public class ActiveListDetailsActivity extends BaseActivity {
 
     ShoppingList mShoppingList;
     String mPushIDList;
+    private ValueEventListener mActiveListRefListener;
+    private Firebase mRefActiveList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +54,9 @@ public class ActiveListDetailsActivity extends BaseActivity {
         ItemsAdapter adapter = new ItemsAdapter(this, refItemList);
         listView.setAdapter(adapter);
 
-        //read from Active List Node
-        Firebase ref = new Firebase(Constants.FIREBASE_URL_ACTIVE_LISTS).child(mPushIDList);
-
-        ref.addValueEventListener(new ValueEventListener() {
+        //read from Active List Node - needed to dynamically Display the Toolbar Title
+        mRefActiveList = new Firebase(Constants.FIREBASE_URL_ACTIVE_LISTS).child(mPushIDList);
+        mActiveListRefListener = mRefActiveList.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -79,6 +80,13 @@ public class ActiveListDetailsActivity extends BaseActivity {
          /* Create an instance of the dialog fragment and show it */
         DialogFragment dialog = AddItemDialogFragment.newInstance(mShoppingList, mPushIDList);
         dialog.show(this.getFragmentManager(), "AddItemDialogFragment");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //remove Event Listener
+        mRefActiveList.removeEventListener(mActiveListRefListener);
     }
 
     @Override

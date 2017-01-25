@@ -62,3 +62,5 @@
 
 ### v15 - remove all associated ShoppingItems when List gets removed
 
+### v16 remove EventListeners to prevent Memory Leak
+
