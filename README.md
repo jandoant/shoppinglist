@@ -60,3 +60,5 @@
  * When user approves - Item is added to the database
  * ListView in DetailScreen shows ListView of Shopping Items
 
+### v15 - remove all associated ShoppingItems when List gets removed
+

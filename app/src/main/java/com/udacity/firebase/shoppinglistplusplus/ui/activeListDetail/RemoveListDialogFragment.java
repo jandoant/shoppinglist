@@ -63,8 +63,12 @@ public class RemoveListDialogFragment extends DialogFragment {
 
     private void removeActiveList(String pushIDList) {
 
+        // all Nodes where the pushID is used to store data
         Firebase refActiveList = new Firebase(Constants.FIREBASE_URL_ACTIVE_LISTS).child(pushIDList);
-        //Remove the entire pushIDNode
+        Firebase refShoppingItems = new Firebase(Constants.FIREBASE_URL_SHOPPING_ITEMS).child(pushIDList);
+
+        //Remove all Nodes Associated with the pushID
         refActiveList.removeValue();
+        refShoppingItems.removeValue();
     }
 }
