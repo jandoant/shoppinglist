@@ -72,7 +72,7 @@ public class ActiveListDetailsActivity extends BaseActivity {
                 return true;
 
             case R.id.action_delete_single_list:
-                //Todo: implement delete action
+                showRemoveListDialog();
                 return true;
 
             default:
@@ -86,5 +86,11 @@ public class ActiveListDetailsActivity extends BaseActivity {
        /* Create an instance of the dialog fragment and show it */
         DialogFragment dialog = EditListNameDialogFragment.newInstance(mShoppingList, mPushIDList);
         dialog.show(this.getFragmentManager(), "EditListNameDialogFragment");
+    }
+
+    private void showRemoveListDialog() {
+       /* Create an instance of the dialog fragment and show it */
+        DialogFragment dialog = RemoveListDialogFragment.newInstance(mShoppingList, mPushIDList);
+        dialog.show(this.getFragmentManager(), "RemoveListDialogFragment");
     }
 }

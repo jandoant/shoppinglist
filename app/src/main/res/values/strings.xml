@@ -208,6 +208,7 @@
     <string name="dialog_title_edit_active_list_name">Edit List</string>
     <string name="hint_edit_shopping_list">Insert new Name</string>
     <string name="positive_button_update">Edit Name</string>
+    <string name="positive_button_remove">Remove</string>
 
 
     <!-- Values -->

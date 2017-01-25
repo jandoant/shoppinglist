@@ -45,3 +45,7 @@
 * override populateView() in Adapter
 
 ### v11 - fix Edit Functionality
+
+### v12 - removing single ShoppingList via DetailActivity
+* delete a Item with the chosen pushID from Firebase
+* create Dialog that warns User about Deletion
