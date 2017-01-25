@@ -32,7 +32,7 @@ public class ActiveListDetailsActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //read from Active List Node
-        Firebase ref = new Firebase(Constants.FIREBASE_URL).child(Constants.FIREBASE_NODE_ACTIVE_LIST);
+        Firebase ref = new Firebase(Constants.FIREBASE_URL_ACTIVE_LIST).child("-KbK1y_kHvB9CvvH-9we");
 
         ref.addValueEventListener(new ValueEventListener() {
             @Override

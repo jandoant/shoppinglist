@@ -64,7 +64,7 @@ public class EditListNameDialogFragment extends EditListDialogFragment {
                 /*
                 * update specific Properties in Firebase
                 */
-                Firebase activeListRef = new Firebase(Constants.FIREBASE_URL_ACTIVE_LIST);
+                Firebase activeListRef = new Firebase(Constants.FIREBASE_URL_ACTIVE_LIST).child("-KbK1y_kHvB9CvvH-9we");
 
                 /*
                 * Hashmap for the specific properties to be updated

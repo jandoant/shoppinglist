@@ -76,7 +76,7 @@ public class ShoppingListsFragment extends Fragment {
         /*
         * Call FirebaseDB-ChildNode and notify app when data under this node has changed
          */
-        Firebase activeListRef = new Firebase(Constants.FIREBASE_URL).child(Constants.FIREBASE_NODE_ACTIVE_LIST);
+        Firebase activeListRef = new Firebase(Constants.FIREBASE_URL_ACTIVE_LIST).child("-KbK1y_kHvB9CvvH-9we");
         activeListRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

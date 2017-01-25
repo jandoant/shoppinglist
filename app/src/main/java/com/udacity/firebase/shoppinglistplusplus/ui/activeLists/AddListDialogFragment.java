@@ -5,6 +5,7 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,6 +71,10 @@ public class AddListDialogFragment extends DialogFragment {
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 if (actionId == EditorInfo.IME_ACTION_DONE || keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
                     addShoppingList();
+                    /**
+                     * Close the dialog fragment when done
+                     */
+                    AddListDialogFragment.this.getDialog().cancel();
                 }
                 return true;
             }
@@ -85,6 +90,10 @@ public class AddListDialogFragment extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         addShoppingList();
+                        /**
+                         * Close the dialog fragment when done
+                         */
+                        AddListDialogFragment.this.getDialog().cancel();
                     }
                 });
 
@@ -96,15 +105,25 @@ public class AddListDialogFragment extends DialogFragment {
      */
     public void addShoppingList() {
 
-        //Firebase Object that points to the root of the DB
-        Firebase refActiveList = new Firebase(Constants.FIREBASE_URL).child(Constants.FIREBASE_NODE_ACTIVE_LIST);
-        //extract UserInput from EditText
-        String userInput = mEditTextListName.getText().toString();
-        //create a ShoppingList Object with a dummyUser
-        ShoppingList shoppingList = new ShoppingList(userInput, "Dummy User");
+        /*
+        * Properties of the new List
+         */
+        String listName = mEditTextListName.getText().toString().trim();
+        String owner = "Dummy User";
+        //create a ShoppingList Object with those properties + Timestamp Created
+        ShoppingList shoppingList = new ShoppingList(listName, owner);
 
-        //create one single node in the DB
-        refActiveList.setValue(shoppingList);
+        /*
+        * Database Operations
+         */
+        if (!TextUtils.isEmpty(listName)) {
+            //Firebase Object that points to the activeLists-Node of the DB
+            Firebase refActiveList = new Firebase(Constants.FIREBASE_URL).child(Constants.FIREBASE_NODE_ACTIVE_LIST);
+            //Create a new node with a unique key
+            Firebase newListRef = refActiveList.push();
+            //create a new List under that unique node
+            newListRef.setValue(shoppingList);
+        }
     }
 }
 

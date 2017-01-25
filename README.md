@@ -30,3 +30,8 @@
 * update the ListName and LastChangedTimestamp Value in Firebase
 
 ### v08 - add Timestamp created to the ShoppingList - Object
+
+### v09 - Create Muliple Lists with unique keys in Firebase
+* create a new Unique-ID under activeLists - Node using push
+* insert a new shooping list item under that unique node
+* display the data in the TextView
