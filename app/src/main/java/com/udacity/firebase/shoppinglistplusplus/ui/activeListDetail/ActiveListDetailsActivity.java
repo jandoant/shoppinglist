@@ -2,9 +2,12 @@ package com.udacity.firebase.shoppinglistplusplus.ui.activeListDetail;
 
 import android.app.DialogFragment;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -36,6 +39,19 @@ public class ActiveListDetailsActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAddItemDialog();
+            }
+        });
+
+        ListView listView = (ListView) findViewById(R.id.list_view_shopping_list_items);
+        Firebase refItemList = new Firebase(Constants.FIREBASE_URL_SHOPPING_ITEMS).child(mPushIDList);
+        ItemsAdapter adapter = new ItemsAdapter(this, refItemList);
+        listView.setAdapter(adapter);
+
         //read from Active List Node
         Firebase ref = new Firebase(Constants.FIREBASE_URL_ACTIVE_LISTS).child(mPushIDList);
 
@@ -57,6 +73,12 @@ public class ActiveListDetailsActivity extends BaseActivity {
 
             }
         });
+    }
+
+    private void showAddItemDialog() {
+         /* Create an instance of the dialog fragment and show it */
+        DialogFragment dialog = AddItemDialogFragment.newInstance(mShoppingList, mPushIDList);
+        dialog.show(this.getFragmentManager(), "AddItemDialogFragment");
     }
 
     @Override

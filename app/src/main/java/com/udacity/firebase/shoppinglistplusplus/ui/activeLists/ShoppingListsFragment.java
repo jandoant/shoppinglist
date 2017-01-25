@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.firebase.client.Firebase;
 import com.udacity.firebase.shoppinglistplusplus.R;
@@ -22,8 +21,6 @@ import com.udacity.firebase.shoppinglistplusplus.utils.Constants;
  */
 public class ShoppingListsFragment extends Fragment {
     private ListView mListView;
-    private TextView mTextViewListName, mTextViewCreatedByUser;
-    private TextView mTextViewEditTime;
 
     public ShoppingListsFragment() {
         /* Required empty public constructor */

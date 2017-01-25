@@ -54,3 +54,9 @@
 * String name
 * String owner
 * getters
+
+### v14 - add ShoppingItem to a list
+ * when user clicks on FAB-Button AddShoppingItemDialog opens
+ * When user approves - Item is added to the database
+ * ListView in DetailScreen shows ListView of Shopping Items
+
