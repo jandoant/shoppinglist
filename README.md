@@ -68,3 +68,8 @@
 * show EditItemDialog when longClicking
 * update ItemName in Firebase
 
+### v18 - delete Shopping Item when clicked on TrashIcon
+* create ImageButton in Item View
+* onClickListener on Image in Adapter to open Dialog
+* remove Item from Firebase by Confirming Dialog
+
