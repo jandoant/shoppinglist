@@ -15,6 +15,7 @@ public class ShoppingList {
     private String listName;
     private String owner;
     private HashMap<String, Object> timestampLastChanged;
+    private HashMap<String, Object> timestampCreated;
 
     public ShoppingList() {
     }
@@ -23,14 +24,29 @@ public class ShoppingList {
         this.listName = listName;
         this.owner = owner;
 
-        //assign timestamp from Firebase Server
+        //assign Timestamp created from Firebase Server
+        //this only happens once, when the Object is instanciated
+        HashMap<String, Object> timestampCreatedObj = new HashMap<String, Object>();
+        timestampCreatedObj.put(Constants.FIREBASE_KEY_TIMESTAMP, ServerValue.TIMESTAMP);
+        this.timestampCreated = timestampCreatedObj;
+
+        //assign Timestamp last changed from Firebase Server
         HashMap<String, Object> timestampLastChangedObj = new HashMap<String, Object>();
         timestampLastChangedObj.put(Constants.FIREBASE_KEY_TIMESTAMP, ServerValue.TIMESTAMP);
         this.timestampLastChanged = timestampLastChangedObj;
     }
 
+    public HashMap<String, Object> getTimestampCreated() {
+        return timestampCreated;
+    }
+
     public HashMap<String, Object> getTimestampLastChanged() {
         return timestampLastChanged;
+    }
+
+    @JsonIgnore
+    public long getTimestampCreatedInMillis() {
+        return (long) this.timestampCreated.get(Constants.FIREBASE_KEY_TIMESTAMP);
     }
 
     @JsonIgnore

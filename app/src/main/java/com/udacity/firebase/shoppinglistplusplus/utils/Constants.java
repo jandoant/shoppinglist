@@ -26,7 +26,8 @@ public final class Constants {
     public static final String FIREBASE_KEY_LIST_NAME = "listName";
     //Nodes
     public static final String FIREBASE_NODE_TIMESTAMP_LAST_CHANGED = "timestampLastChanged";
-    public static final String FIREBASE_NODE_ACTIVE_LIST = "activeList";
+    public static final String FIREBASE_NODE_TIMESTAMP_CREATED = "timestampCreated";
+    public static final String FIREBASE_NODE_ACTIVE_LIST = "activeLists";
     //URL to specific node
     public static final String FIREBASE_URL_ACTIVE_LIST = FIREBASE_URL + "/" + FIREBASE_NODE_ACTIVE_LIST;
 

@@ -28,3 +28,5 @@
 * when clicking on that Button -> show Edit ListName Dialog
 * Display current ListName in EditDialog
 * update the ListName and LastChangedTimestamp Value in Firebase
+
+### v08 - add Timestamp created to the ShoppingList - Object
