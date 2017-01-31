@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.udacity.firebase.shoppinglistplusplus.R;
 import com.udacity.firebase.shoppinglistplusplus.ui.BaseActivity;
 
@@ -46,9 +47,13 @@ public class CreateAccountActivity extends BaseActivity {
      * Link layout elements from XML and setup the progress dialog
      */
     public void initializeScreen() {
+
+        /* Link EditTextFields */
         mEditTextUsernameCreate = (EditText) findViewById(R.id.edit_text_username_create);
         mEditTextEmailCreate = (EditText) findViewById(R.id.edit_text_email_create);
         mEditTextPasswordCreate = (EditText) findViewById(R.id.edit_text_password_create);
+
+        /* Init Background Image based on Screen Orientation */
         LinearLayout linearLayoutCreateAccountActivity = (LinearLayout) findViewById(R.id.linear_layout_create_account_activity);
         initializeBackground(linearLayoutCreateAccountActivity);
 
@@ -83,6 +88,8 @@ public class CreateAccountActivity extends BaseActivity {
      * Create new account using Firebase email/password provider
      */
     public void onCreateAccountPressed(View view) {
+
+        /* Extract User Input from EditTextFields */
         String userName = mEditTextUsernameCreate.getText().toString().trim();
         String userEmail = mEditTextEmailCreate.getText().toString().trim();
         String userPassword = mEditTextPasswordCreate.getText().toString().trim();
@@ -93,7 +100,7 @@ public class CreateAccountActivity extends BaseActivity {
         * if not, show Error Messages
          */
         if (!isUserNameValid(userName)) {
-            mEditTextUsernameCreate.setError("Please enter a Username");
+            mEditTextUsernameCreate.setError("Please enter first and last name");
             mEditTextUsernameCreate.requestFocus();
         } else if (!isEmailValid(userEmail)) {
             mEditTextEmailCreate.setError("Not a valid Email");
@@ -109,7 +116,12 @@ public class CreateAccountActivity extends BaseActivity {
 
     private boolean isUserNameValid(String userName) {
 
-        return !TextUtils.isEmpty(userName);
+        if (TextUtils.isEmpty(userName)) {
+            return false;
+        } else {
+            String[] userNameArr = userName.split(" ");
+            return userNameArr.length > 1;
+        }
     }
 
     /**
@@ -157,7 +169,12 @@ public class CreateAccountActivity extends BaseActivity {
                     mAuthProgressDialog.dismiss();
                     Toast.makeText(CreateAccountActivity.this, "Authentication failed.",
                             Toast.LENGTH_SHORT).show();
-                    Log.e(LOG_TAG, task.getException().getMessage());
+                    Log.e(LOG_TAG, String.valueOf(task.getException()));
+
+                    /* Error Message if entered Email is already registered in Firebase - Email must be unique */
+                    if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                        mEditTextEmailCreate.setError("Email is already taken.");
+                    }
                 }
             }
         });

@@ -83,4 +83,6 @@
 * create a User Account, when User enters Data in Input Fields and hits "Create Account"
 * Check that the password is at least 5 characters long and that the email is in the format of an email (see below for how)
 
-
+### v1.03 - improved input validation (create Account)
+* User name must consist of first and last name
+* Helpful Error Message, when Email is already registered in Firebase
