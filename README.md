@@ -77,4 +77,10 @@
 
 ### v1.01 - Copy Login Activities and Layout-Files from GitHub
 
+### v1.02 - Enable Creation of a new User Account
+* make LoginActivity the Launcher Activity
+* Create Account Activity gets started when User hits "Sign Up"
+* create a User Account, when User enters Data in Input Fields and hits "Create Account"
+* Check that the password is at least 5 characters long and that the email is in the format of an email (see below for how)
+
 

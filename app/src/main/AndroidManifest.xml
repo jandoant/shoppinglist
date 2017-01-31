@@ -17,12 +17,6 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.udacity.firebase.shoppinglistplusplus.ui.MainActivity"/>
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity android:name=".ui.activeListDetail.ActiveListDetailsActivity">
             <meta-data
@@ -32,6 +26,11 @@
         <activity android:name=".ui.login.CreateAccountActivity">
         </activity>
         <activity android:name=".ui.login.LoginActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
     </application>
 
