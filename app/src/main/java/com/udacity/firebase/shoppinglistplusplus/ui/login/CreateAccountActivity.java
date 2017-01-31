@@ -11,14 +11,18 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.google.firebase.auth.FirebaseUser;
 import com.udacity.firebase.shoppinglistplusplus.R;
+import com.udacity.firebase.shoppinglistplusplus.model.User;
 import com.udacity.firebase.shoppinglistplusplus.ui.BaseActivity;
+import com.udacity.firebase.shoppinglistplusplus.utils.Constants;
 import com.udacity.firebase.shoppinglistplusplus.utils.Utils;
 
 public class CreateAccountActivity extends BaseActivity {
@@ -117,28 +121,28 @@ public class CreateAccountActivity extends BaseActivity {
     /**
      * Creates a User Account in Firebase with an Email and Password the user enters into EditTextFields
      *
-     * @param eMail    - the Email the User wants to register
+     * @param email    - the Email the User wants to register
      * @param password - The Password the User wants to use
      */
-    private void createUserAccount(String eMail, String password) {
-        mAuth.createUserWithEmailAndPassword(eMail, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+    private void createUserAccount(final String email, String password) {
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     mAuthProgressDialog.dismiss();
                     Toast.makeText(CreateAccountActivity.this, "Thank you. Your account was successfully created",
                             Toast.LENGTH_SHORT).show();
+
+                    User newUser = new User(email, mEditTextUsernameCreate.getText().toString());
+                    createUserInFirebaseHelper(newUser);
                     openLoginActivity();
-
-
-
                 } else {
                     mAuthProgressDialog.dismiss();
                     Toast.makeText(CreateAccountActivity.this, "Authentication failed.",
                             Toast.LENGTH_SHORT).show();
                     Log.e(LOG_TAG, String.valueOf(task.getException()));
 
-                    /* Error Message if entered Email is already registered in Firebase - Email must be unique */
+                    /* Error Message if entered Email is alReready registered in Firebase - Email must be unique */
                     if (task.getException() instanceof FirebaseAuthUserCollisionException) {
                         mEditTextEmailCreate.setError("Email is already taken.");
                         mEditTextEmailCreate.requestFocus();
@@ -153,16 +157,22 @@ public class CreateAccountActivity extends BaseActivity {
         });
     }
 
+    private void createUserInFirebaseHelper(User newUser) {
+        Firebase usersRef = new Firebase(Constants.FIREBASE_URL_USERS);
+
+        //needed to retrieve User ID generated when the user created his account
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        /* Creates a User object in Firebase DB under the Unique User ID Node */
+        if (user != null) {
+            usersRef.child(user.getUid()).setValue(newUser);
+        }
+    }
+
     private void openLoginActivity() {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
-    }
-
-    /**
-     * Creates a new user in Firebase from the Java POJO
-     */
-    private void createUserInFirebaseHelper(final String encodedEmail) {
     }
 
     /**

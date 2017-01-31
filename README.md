@@ -90,3 +90,5 @@
 ### v1.04 - add Login Functionality (EMail & Password)
 * successful Login redirects to `MainActivity`
 * show helpful Error Messages when Authentification fails
+
+### v1.05 - Create User in Firebase DB and store User Data

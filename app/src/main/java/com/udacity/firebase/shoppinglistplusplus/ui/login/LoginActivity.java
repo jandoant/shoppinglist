@@ -29,6 +29,7 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
@@ -60,6 +61,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_login);
         mAuth = FirebaseAuth.getInstance();
         /**
@@ -139,8 +141,12 @@ public class LoginActivity extends BaseActivity {
                                 // Log Error to console
                                 Log.w(LOG_TAG, "signInWithEmail", exception);
 
+                                /* if there is no Internet connection*/
+                                if (exception instanceof FirebaseNetworkException) {
+                                    Toast.makeText(LoginActivity.this, "There is no Internet Connection Available", Toast.LENGTH_SHORT).show();
+                                }
                                 /* if Email doesnt't exist*/
-                                if (exception instanceof FirebaseAuthInvalidUserException) {
+                                else if (exception instanceof FirebaseAuthInvalidUserException) {
                                     mEditTextEmailInput.setError("No such Email registered");
                                     mEditTextEmailInput.requestFocus();
                                 }

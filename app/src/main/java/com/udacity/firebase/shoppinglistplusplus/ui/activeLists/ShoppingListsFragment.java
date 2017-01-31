@@ -20,6 +20,7 @@ import com.udacity.firebase.shoppinglistplusplus.utils.Constants;
  * create an instance of this fragment.
  */
 public class ShoppingListsFragment extends Fragment {
+
     private ListView mListView;
     private ActiveListsAdapter mAdapter;
 
