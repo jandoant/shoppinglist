@@ -86,3 +86,7 @@
 ### v1.03 - improved input validation (create Account)
 * User name must consist of first and last name
 * Helpful Error Message, when Email is already registered in Firebase
+
+### v1.04 - add Login Functionality (EMail & Password)
+* successful Login redirects to `MainActivity`
+* show helpful Error Messages when Authentification fails

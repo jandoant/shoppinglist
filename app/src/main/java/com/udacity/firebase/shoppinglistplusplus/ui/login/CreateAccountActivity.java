@@ -4,9 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
@@ -18,8 +16,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.udacity.firebase.shoppinglistplusplus.R;
 import com.udacity.firebase.shoppinglistplusplus.ui.BaseActivity;
+import com.udacity.firebase.shoppinglistplusplus.utils.Utils;
 
 public class CreateAccountActivity extends BaseActivity {
 
@@ -99,56 +99,19 @@ public class CreateAccountActivity extends BaseActivity {
         * if so, create User in Firebase and show Progress Dialog
         * if not, show Error Messages
          */
-        if (!isUserNameValid(userName)) {
+        if (!Utils.isUserNameValid(userName)) {
             mEditTextUsernameCreate.setError("Please enter first and last name");
             mEditTextUsernameCreate.requestFocus();
-        } else if (!isEmailValid(userEmail)) {
+        } else if (!Utils.isEmailValid(userEmail)) {
             mEditTextEmailCreate.setError("Not a valid Email");
             mEditTextEmailCreate.requestFocus();
-        } else if (!isPasswordValid(userPassword)) {
+        } else if (!Utils.isPasswordValid(userPassword)) {
             mEditTextPasswordCreate.setError("Password must have at least 5 Characters");
             mEditTextPasswordCreate.requestFocus();
         } else {
             mAuthProgressDialog.show();
             createUserAccount(userEmail, userPassword);
         }
-    }
-
-    private boolean isUserNameValid(String userName) {
-
-        if (TextUtils.isEmpty(userName)) {
-            return false;
-        } else {
-            String[] userNameArr = userName.split(" ");
-            return userNameArr.length > 1;
-        }
-    }
-
-    /**
-     * Clientside checks wether an Email is valid or not
-     *
-     * @param email - EMail to evaluate
-     * @return true if EMail is valid, false if not
-     */
-    private boolean isEmailValid(String email) {
-       /* Email must be entered and match Google's Pattern for valid Email*/
-        if (TextUtils.isEmpty(email)) {
-            return false;
-        } else {
-            return Patterns.EMAIL_ADDRESS.matcher(email).matches();
-        }
-    }
-
-    /**
-     * Clientside checks wether a Password is valid or not
-     * Requirements at this point: Password must be at least 5 characters long
-     *
-     * @param password
-     * @return true if password is valid, false if not
-     */
-    private boolean isPasswordValid(String password) {
-        /* Password must be at least 5 Characters long*/
-        return password.length() > 5;
     }
 
     /**
@@ -163,8 +126,12 @@ public class CreateAccountActivity extends BaseActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     mAuthProgressDialog.dismiss();
-                    Toast.makeText(CreateAccountActivity.this, "Authentication successful",
+                    Toast.makeText(CreateAccountActivity.this, "Thank you. Your account was successfully created",
                             Toast.LENGTH_SHORT).show();
+                    openLoginActivity();
+
+
+
                 } else {
                     mAuthProgressDialog.dismiss();
                     Toast.makeText(CreateAccountActivity.this, "Authentication failed.",
@@ -174,10 +141,22 @@ public class CreateAccountActivity extends BaseActivity {
                     /* Error Message if entered Email is already registered in Firebase - Email must be unique */
                     if (task.getException() instanceof FirebaseAuthUserCollisionException) {
                         mEditTextEmailCreate.setError("Email is already taken.");
+                        mEditTextEmailCreate.requestFocus();
+                    }
+
+                    if (task.getException() instanceof FirebaseAuthWeakPasswordException) {
+                        mEditTextPasswordCreate.setError("This is an insecure Password");
+                        mEditTextPasswordCreate.requestFocus();
                     }
                 }
             }
         });
+    }
+
+    private void openLoginActivity() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     /**

@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -26,17 +27,27 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.Scope;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.udacity.firebase.shoppinglistplusplus.R;
 import com.udacity.firebase.shoppinglistplusplus.ui.BaseActivity;
+import com.udacity.firebase.shoppinglistplusplus.ui.MainActivity;
+import com.udacity.firebase.shoppinglistplusplus.utils.Utils;
 
 import java.io.IOException;
 
 public class LoginActivity extends BaseActivity {
+
     /* Request code used to invoke sign in user interactions for Google+ */
     public static final int RC_GOOGLE_LOGIN = 1;
     private static final String LOG_TAG = LoginActivity.class.getSimpleName();
     /* A Google account object that is populated if the user signs in with Google */
     GoogleSignInAccount mGoogleAccount;
+    private FirebaseAuth mAuth;
     /* A dialog that is presented until the Firebase authentication finished. */
     private ProgressDialog mAuthProgressDialog;
     private EditText mEditTextEmailInput, mEditTextPasswordInput;
@@ -50,7 +61,7 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        mAuth = FirebaseAuth.getInstance();
         /**
          * Link layout elements from XML and setup progress dialog
          */
@@ -64,7 +75,7 @@ public class LoginActivity extends BaseActivity {
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
 
                 if (actionId == EditorInfo.IME_ACTION_DONE || keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
-                    signInPassword();
+                    signInWithEmailAndPassword();
                 }
                 return true;
             }
@@ -89,9 +100,63 @@ public class LoginActivity extends BaseActivity {
     }
 
     /**
-     * Sign in with Password provider (used when user taps "Done" action on keyboard)
+     * Sign in with Email + Password provider
      */
-    public void signInPassword() {
+    private void signInWithEmailAndPassword() {
+
+        /* extract User Input */
+        String userInputEmail = mEditTextEmailInput.getText().toString().trim();
+        String userInputPassword = mEditTextPasswordInput.getText().toString().trim();
+
+        /*
+        * Try Login if User Input matches Validation Rules
+        * if not, show helpful Error Messages
+        */
+        if (!Utils.isEmailValid(userInputEmail)) {
+            mEditTextEmailInput.setError("Please enter valid Email");
+            mEditTextEmailInput.requestFocus();
+        } else if (!Utils.isPasswordValid(userInputPassword)) {
+            mEditTextPasswordInput.setError("Password must have at least 5 Characters");
+            mEditTextPasswordInput.requestFocus();
+        } else {
+            mAuthProgressDialog.show();
+            mAuth.signInWithEmailAndPassword(userInputEmail, userInputPassword)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+
+                            if (task.isSuccessful()) {
+                                mAuthProgressDialog.dismiss();
+                                Log.d(LOG_TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+                                Toast.makeText(LoginActivity.this, "You were successfully logged in.", Toast.LENGTH_SHORT).show();
+                                openMainActivity();
+                            } else {
+                                mAuthProgressDialog.dismiss();
+
+                                /*figure out what the problem is and show helpful Error Messages*/
+                                Exception exception = task.getException();
+
+                                // Log Error to console
+                                Log.w(LOG_TAG, "signInWithEmail", exception);
+
+                                /* if Email doesnt't exist*/
+                                if (exception instanceof FirebaseAuthInvalidUserException) {
+                                    mEditTextEmailInput.setError("No such Email registered");
+                                    mEditTextEmailInput.requestFocus();
+                                }
+                                /* if Email and Password don't match*/
+                                else if (exception instanceof FirebaseAuthInvalidCredentialsException) {
+                                    mEditTextPasswordInput.setError("Email and Password don't match");
+                                    mEditTextPasswordInput.requestFocus();
+                                }
+
+                                /* Inform User about failed Authentication */
+                                Toast.makeText(LoginActivity.this, "Login failed.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        }
     }
 
     /**
@@ -127,6 +192,12 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
+    private void openMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     /**
      * Sign in with Google plus when user clicks "Sign in with Google" textView (button)
      */
@@ -160,7 +231,7 @@ public class LoginActivity extends BaseActivity {
      * Sign in with Password provider when user clicks sign in button
      */
     public void onSignInPressed(View view) {
-        signInPassword();
+        signInWithEmailAndPassword();
     }
 
     /**
